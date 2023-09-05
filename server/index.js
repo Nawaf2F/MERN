@@ -87,6 +87,8 @@ const jwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
 
 passport.use(jwtStrategy);
 
+app.use(express.static("uploads"));
+
 // middleware router
 app.use("/", router);
 

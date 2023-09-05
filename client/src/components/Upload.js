@@ -24,8 +24,9 @@ function Upload() {
       },
     })
       .then((response) => {
-        const imageURL = response.data.imageURL;
-
+        console.log("Image uploaded:", response.data.message);
+        const imageURL = response.data.url;
+      console.log('imageURL: ',imageURL);
         const reportData = {
           patientName,
           patientID,
@@ -35,7 +36,9 @@ function Upload() {
         };
 
         // Send report data to create report route
-        Axios.post("http://localhost:27017/create-report", reportData)
+        Axios.post("http://localhost:27017/createReport",reportData,{headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the JWT token here
+        }})
           .then((reportResponse) => {
             console.log("Report created:", reportResponse.data);
             // Handle success or display a success message
